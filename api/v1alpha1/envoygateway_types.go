@@ -31,6 +31,7 @@ const (
 )
 
 // +kubebuilder:object:root=true
+// +k8s:openapi-gen=true
 
 // EnvoyGateway is the schema for the envoygateways API.
 type EnvoyGateway struct {
@@ -41,6 +42,8 @@ type EnvoyGateway struct {
 }
 
 // EnvoyGatewaySpec defines the desired state of Envoy Gateway.
+// +k8s:openapi-gen=true
+
 type EnvoyGatewaySpec struct {
 	// Gateway defines desired Gateway API specific configuration. If unset,
 	// default configuration parameters will apply.
@@ -101,6 +104,7 @@ type EnvoyGatewaySpec struct {
 
 // RuntimeFlag defines a runtime flag used to guard breaking changes or risky experimental features in new Envoy Gateway releases.
 // A runtime flag may be enabled or disabled by default and can be toggled through the EnvoyGateway resource.
+// +k8s:openapi-gen=true
 // +enum
 // +kubebuilder:validation:Enum=XDSNameSchemeV2
 type RuntimeFlag string
@@ -126,6 +130,8 @@ type KubernetesClient struct {
 }
 
 // KubernetesClientRateLimit defines the rate limit settings for the Kubernetes client.
+// +k8s:openapi-gen=true
+
 type KubernetesClientRateLimit struct {
 	// QPS defines the queries per second limit for the Kubernetes client.
 	// +optional
@@ -141,6 +147,8 @@ type KubernetesClientRateLimit struct {
 }
 
 // LeaderElection defines the desired leader election settings.
+// +k8s:openapi-gen=true
+
 type LeaderElection struct {
 	// LeaseDuration defines the time non-leader contenders will wait before attempting to claim leadership.
 	// It's based on the timestamp of the last acknowledged signal.
@@ -165,12 +173,16 @@ type LeaderElection struct {
 
 // EnvoyGatewayTelemetry defines telemetry configurations for envoy gateway control plane.
 // Control plane will focus on metrics observability telemetry and tracing telemetry later.
+// +k8s:openapi-gen=true
+
 type EnvoyGatewayTelemetry struct {
 	// Metrics defines metrics configuration for envoy gateway.
 	Metrics *EnvoyGatewayMetrics `json:"metrics,omitempty"`
 }
 
 // EnvoyGatewayLogging defines logging for Envoy Gateway.
+// +k8s:openapi-gen=true
+
 type EnvoyGatewayLogging struct {
 	// Level is the logging level. If unspecified, defaults to "info".
 	// EnvoyGatewayLogComponent options: default/provider/gateway-api/xds-translator/xds-server/infrastructure/global-ratelimit.
@@ -212,6 +224,8 @@ const (
 )
 
 // Gateway defines the desired Gateway API configuration of Envoy Gateway.
+// +k8s:openapi-gen=true
+
 type Gateway struct {
 	// ControllerName defines the name of the Gateway API controller. If unspecified,
 	// defaults to "gateway.envoyproxy.io/gatewayclass-controller". See the following
@@ -223,6 +237,8 @@ type Gateway struct {
 }
 
 // ExtensionAPISettings defines the settings specific to Gateway API Extensions.
+// +k8s:openapi-gen=true
+
 type ExtensionAPISettings struct {
 	// EnableEnvoyPatchPolicy enables Envoy Gateway to
 	// reconcile and implement the EnvoyPatchPolicy resources.
@@ -233,6 +249,7 @@ type ExtensionAPISettings struct {
 }
 
 // EnvoyGatewayProvider defines the desired configuration of a provider.
+// +k8s:openapi-gen=true
 // +union
 type EnvoyGatewayProvider struct {
 	// Type is the type of provider to use. Supported types are "Kubernetes", "Custom".
@@ -255,6 +272,7 @@ type EnvoyGatewayProvider struct {
 }
 
 // EnvoyGatewayKubernetesProvider defines configuration for the Kubernetes provider.
+// +k8s:openapi-gen=true
 type EnvoyGatewayKubernetesProvider struct {
 	// RateLimitDeployment defines the desired state of the Envoy ratelimit deployment resource.
 	// If unspecified, default settings for the managed Envoy ratelimit deployment resource
@@ -312,9 +330,11 @@ const (
 )
 
 // KubernetesWatchModeType defines the type of KubernetesWatchMode
+// +k8s:openapi-gen=true
 type KubernetesWatchModeType string
 
 // KubernetesWatchMode holds the configuration for which input resources to watch and reconcile.
+// +k8s:openapi-gen=true
 type KubernetesWatchMode struct {
 	// Type indicates what watch mode to use. KubernetesWatchModeTypeNamespaces and
 	// KubernetesWatchModeTypeNamespaceSelector are currently supported
@@ -343,10 +363,12 @@ const (
 )
 
 // KubernetesDeployModeType defines the type of KubernetesDeployMode
+// +k8s:openapi-gen=true
 type KubernetesDeployModeType string
 
 // KubernetesDeployMode holds configuration for how to deploy managed resources such as the Envoy Proxy
 // data plane fleet.
+// +k8s:openapi-gen=true
 type KubernetesDeployMode struct {
 	// Type indicates what deployment mode to use. "ControllerNamespace" and
 	// "GatewayNamespace" are currently supported.
@@ -358,6 +380,7 @@ type KubernetesDeployMode struct {
 }
 
 // EnvoyGatewayCustomProvider defines configuration for the Custom provider.
+// +k8s:openapi-gen=true
 type EnvoyGatewayCustomProvider struct {
 	// Resource defines the desired resource provider.
 	// This provider is used to specify the provider to be used
@@ -377,6 +400,7 @@ type EnvoyGatewayCustomProvider struct {
 
 // ResourceProviderType defines the types of custom resource providers supported by Envoy Gateway.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=File
 type ResourceProviderType string
 
@@ -386,6 +410,7 @@ const (
 )
 
 // EnvoyGatewayResourceProvider defines configuration for the Custom Resource provider.
+// +k8s:openapi-gen=true
 type EnvoyGatewayResourceProvider struct {
 	// Type is the type of resource provider to use. Supported types are "File".
 	//
@@ -399,6 +424,7 @@ type EnvoyGatewayResourceProvider struct {
 }
 
 // EnvoyGatewayFileResourceProvider defines configuration for the File Resource provider.
+// +k8s:openapi-gen=true
 type EnvoyGatewayFileResourceProvider struct {
 	// Paths are the paths to a directory or file containing the resource configuration.
 	// Recursive subdirectories are not currently supported.
@@ -407,6 +433,7 @@ type EnvoyGatewayFileResourceProvider struct {
 
 // InfrastructureProviderType defines the types of custom infrastructure providers supported by Envoy Gateway.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=Host
 type InfrastructureProviderType string
 
@@ -416,6 +443,7 @@ const (
 )
 
 // EnvoyGatewayInfrastructureProvider defines configuration for the Custom Infrastructure provider.
+// +k8s:openapi-gen=true
 type EnvoyGatewayInfrastructureProvider struct {
 	// Type is the type of infrastructure providers to use. Supported types are "Host".
 	//
@@ -429,12 +457,14 @@ type EnvoyGatewayInfrastructureProvider struct {
 }
 
 // EnvoyGatewayHostInfrastructureProvider defines configuration for the Host Infrastructure provider.
+// +k8s:openapi-gen=true
 type EnvoyGatewayHostInfrastructureProvider struct {
 	// TODO: Add config as use cases are better understood.
 }
 
 // RateLimit defines the configuration associated with the Rate Limit Service
 // used for Global Rate Limiting.
+// +k8s:openapi-gen=true
 type RateLimit struct {
 	// Backend holds the configuration associated with the
 	// database backend used by the rate limit service to store
@@ -459,6 +489,7 @@ type RateLimit struct {
 	Telemetry *RateLimitTelemetry `json:"telemetry,omitempty"`
 }
 
+// +k8s:openapi-gen=true
 type RateLimitTelemetry struct {
 	// Metrics defines metrics configuration for RateLimit.
 	Metrics *RateLimitMetrics `json:"metrics,omitempty"`
@@ -467,15 +498,21 @@ type RateLimitTelemetry struct {
 	Tracing *RateLimitTracing `json:"tracing,omitempty"`
 }
 
+// +k8s:openapi-gen=true
+
 type RateLimitMetrics struct {
 	// Prometheus defines the configuration for prometheus endpoint.
 	Prometheus *RateLimitMetricsPrometheusProvider `json:"prometheus,omitempty"`
 }
 
+// +k8s:openapi-gen=true
+
 type RateLimitMetricsPrometheusProvider struct {
 	// Disable the Prometheus endpoint.
 	Disable bool `json:"disable,omitempty"`
 }
+
+// +k8s:openapi-gen=true
 
 type RateLimitTracing struct {
 	// SamplingRate controls the rate at which traffic will be
@@ -489,6 +526,8 @@ type RateLimitTracing struct {
 	Provider *RateLimitTracingProvider `json:"provider,omitempty"`
 }
 
+// +k8s:openapi-gen=true
+
 type RateLimitTracingProviderType string
 
 const (
@@ -496,6 +535,8 @@ const (
 )
 
 // RateLimitTracingProvider defines the tracing provider configuration of RateLimit
+// +k8s:openapi-gen=true
+
 type RateLimitTracingProvider struct {
 	// Type defines the tracing provider type.
 	// Since to RateLimit Exporter currently using OpenTelemetry, only OpenTelemetry is supported
@@ -507,6 +548,7 @@ type RateLimitTracingProvider struct {
 
 // RateLimitDatabaseBackend defines the configuration associated with
 // the database backend used by the rate limit service.
+// +k8s:openapi-gen=true
 // +union
 type RateLimitDatabaseBackend struct {
 	// Type is the type of database backend to use. Supported types are:
@@ -522,6 +564,7 @@ type RateLimitDatabaseBackend struct {
 
 // RateLimitDatabaseBackendType specifies the types of database backend
 // to be used by the rate limit service.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=Redis
 type RateLimitDatabaseBackendType string
 
@@ -531,6 +574,8 @@ const (
 )
 
 // RedisTLSSettings defines the TLS configuration for connecting to redis database.
+// +k8s:openapi-gen=true
+
 type RedisTLSSettings struct {
 	// CertificateRef defines the client certificate reference for TLS connections.
 	// Currently only a Kubernetes Secret of type TLS is supported.
@@ -539,6 +584,8 @@ type RedisTLSSettings struct {
 }
 
 // RateLimitRedisSettings defines the configuration for connecting to redis database.
+// +k8s:openapi-gen=true
+
 type RateLimitRedisSettings struct {
 	// URL of the Redis Database.
 	// This can reference a single Redis host or a comma delimited list for Sentinel and Cluster deployments of Redis.
@@ -552,6 +599,8 @@ type RateLimitRedisSettings struct {
 
 // ExtensionManager defines the configuration for registering an extension manager to
 // the Envoy Gateway control plane.
+// +k8s:openapi-gen=true
+
 type ExtensionManager struct {
 	// Resources defines the set of K8s resources the extension will handle as route
 	// filter resources
@@ -609,12 +658,16 @@ type ExtensionManager struct {
 }
 
 // ExtensionHooks defines extension hooks across all supported runners
+// +k8s:openapi-gen=true
+
 type ExtensionHooks struct {
 	// XDSTranslator defines all the supported extension hooks for the xds-translator runner
 	XDSTranslator *XDSTranslatorHooks `json:"xdsTranslator,omitempty"`
 }
 
 // XDSTranslatorHooks contains all the pre and post hooks for the xds-translator runner.
+// +k8s:openapi-gen=true
+
 type XDSTranslatorHooks struct {
 	Pre  []XDSTranslatorHook `json:"pre,omitempty"`
 	Post []XDSTranslatorHook `json:"post,omitempty"`
@@ -624,6 +677,8 @@ type XDSTranslatorHooks struct {
 }
 
 // TranslationConfig defines the configuration for the translation hook.
+// +k8s:openapi-gen=true
+
 type TranslationConfig struct {
 	// Listener defines the configuration for the listener translation hook.
 	//
@@ -643,6 +698,7 @@ type TranslationConfig struct {
 	Secret *SecretTranslationConfig `json:"secret,omitempty"`
 }
 
+// +k8s:openapi-gen=true
 type ListenerTranslationConfig struct {
 	// IncludeAll defines whether all listeners should be included in the translation hook.
 	// Default is false.
@@ -650,6 +706,8 @@ type ListenerTranslationConfig struct {
 	// +optional
 	IncludeAll *bool `json:"includeAll,omitempty"`
 }
+
+// +k8s:openapi-gen=true
 
 type RouteTranslationConfig struct {
 	// IncludeAll defines whether all routes should be included in the translation hook.
@@ -659,6 +717,8 @@ type RouteTranslationConfig struct {
 	IncludeAll *bool `json:"includeAll,omitempty"`
 }
 
+// +k8s:openapi-gen=true
+
 type ClusterTranslationConfig struct {
 	// IncludeAll defines whether all clusters should be included in the translation hook.
 	// Default is true for backward compatibility.
@@ -666,6 +726,8 @@ type ClusterTranslationConfig struct {
 	// +optional
 	IncludeAll *bool `json:"includeAll,omitempty"`
 }
+
+// +k8s:openapi-gen=true
 
 type SecretTranslationConfig struct {
 	// IncludeAll defines whether all secrets should be included in the translation hook.
@@ -676,6 +738,8 @@ type SecretTranslationConfig struct {
 }
 
 // ExtensionService defines the configuration for connecting to a registered extension service.
+// +k8s:openapi-gen=true
+
 type ExtensionService struct {
 	// BackendEndpoint points to where the extension server can be found.
 	BackendEndpoint `json:",inline"`
@@ -708,6 +772,8 @@ type ExtensionService struct {
 }
 
 // ExtensionTLS defines the TLS configuration when connecting to an extension service.
+// +k8s:openapi-gen=true
+
 type ExtensionTLS struct {
 	// CertificateRef is a reference to a Kubernetes Secret with a CA certificate in a key named "tls.crt".
 	//
@@ -728,10 +794,14 @@ type ExtensionTLS struct {
 }
 
 // GRPCStatus defines grpc status codes as defined in https://github.com/grpc/grpc/blob/master/doc/statuscodes.md.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=CANCELLED;UNKNOWN;INVALID_ARGUMENT;DEADLINE_EXCEEDED;NOT_FOUND;ALREADY_EXISTS;PERMISSION_DENIED;RESOURCE_EXHAUSTED;FAILED_PRECONDITION;ABORTED;OUT_OF_RANGE;UNIMPLEMENTED;INTERNAL;UNAVAILABLE;DATA_LOSS;UNAUTHENTICATED
+
 type RetryableGRPCStatusCode string
 
 // ExtensionServiceRetry defines the retry policy for to use when errors are encountered in communication with the extension service.
+// +k8s:openapi-gen=true
+
 type ExtensionServiceRetry struct {
 	// MaxAttempts defines the maximum number of retry attempts.
 	// Default: 4
@@ -765,6 +835,7 @@ type ExtensionServiceRetry struct {
 }
 
 // EnvoyGatewayAdmin defines the Envoy Gateway Admin configuration.
+// +k8s:openapi-gen=true
 type EnvoyGatewayAdmin struct {
 	// Address defines the address of Envoy Gateway Admin Server.
 	//
@@ -781,6 +852,7 @@ type EnvoyGatewayAdmin struct {
 }
 
 // EnvoyGatewayAdminAddress defines the Envoy Gateway Admin Address configuration.
+// +k8s:openapi-gen=true
 type EnvoyGatewayAdminAddress struct {
 	// Port defines the port the admin server is exposed on.
 	//
@@ -796,12 +868,14 @@ type EnvoyGatewayAdminAddress struct {
 }
 
 // ShutdownManager defines the configuration for the shutdown manager.
+// +k8s:openapi-gen=true
 type ShutdownManager struct {
 	// Image specifies the ShutdownManager container image to be used, instead of the default image.
 	Image *string `json:"image,omitempty"`
 }
 
 // EnvoyGatewayTopologyInjector defines the configuration for topology injector MutatatingWebhookConfiguration
+// +k8s:openapi-gen=true
 type EnvoyGatewayTopologyInjector struct {
 	// +optional
 	Disable *bool `json:"disabled,omitempty"`

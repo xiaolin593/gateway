@@ -12,6 +12,7 @@ import (
 const BasicAuthUsersSecretKey = ".htpasswd"
 
 // BasicAuth defines the configuration for 	the HTTP Basic Authentication.
+// +k8s:openapi-gen=true
 type BasicAuth struct {
 	// The Kubernetes secret which contains the username-password pairs in
 	// htpasswd format, used to verify user credentials in the "Authorization"

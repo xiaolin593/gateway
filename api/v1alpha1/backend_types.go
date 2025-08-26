@@ -18,6 +18,7 @@ const (
 
 // AppProtocolType defines various backend applications protocols supported by Envoy Gateway
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=gateway.envoyproxy.io/h2c;gateway.envoyproxy.io/ws;gateway.envoyproxy.io/wss
 type AppProtocolType string
 
@@ -33,6 +34,7 @@ const (
 // Backend allows the user to configure the endpoints of a backend and
 // the behavior of the connection from Envoy Proxy to the backend.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:categories=envoy-gateway,shortName=be
 // +kubebuilder:subresource:status
@@ -52,6 +54,7 @@ type Backend struct {
 // BackendEndpoint describes a backend endpoint, which can be either a fully-qualified domain name, IP address or unix domain socket
 // corresponding to Envoy's Address: https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/address.proto#config-core-v3-address
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.fqdn) || has(self.ip) || has(self.unix))",message="one of fqdn, ip or unix must be specified"
 // +kubebuilder:validation:XValidation:rule="((has(self.fqdn) && !(has(self.ip) || has(self.unix))) || (has(self.ip) && !(has(self.fqdn) || has(self.unix))) || (has(self.unix) && !(has(self.ip) || has(self.fqdn))))",message="only one of fqdn, ip or unix can be specified"
 type BackendEndpoint struct {
@@ -86,6 +89,7 @@ type BackendEndpoint struct {
 
 // IPEndpoint describes TCP/UDP socket address, corresponding to Envoy's Socket Address
 // https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/address.proto#config-core-v3-socketaddress
+// +k8s:openapi-gen=true
 type IPEndpoint struct {
 	// Address defines the IP address of the backend endpoint.
 	// Supports both IPv4 and IPv6 addresses.
@@ -104,6 +108,7 @@ type IPEndpoint struct {
 
 // FQDNEndpoint describes TCP/UDP socket address, corresponding to Envoy's Socket Address
 // https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/address.proto#config-core-v3-socketaddress
+// +k8s:openapi-gen=true
 type FQDNEndpoint struct {
 	// Hostname defines the FQDN hostname of the backend endpoint.
 	//
@@ -121,6 +126,7 @@ type FQDNEndpoint struct {
 
 // UnixSocket describes TCP/UDP unix domain socket address, corresponding to Envoy's Pipe
 // https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/address.proto#config-core-v3-pipe
+// +k8s:openapi-gen=true
 type UnixSocket struct {
 	// Path defines the unix domain socket path of the backend endpoint.
 	// The path length must not exceed 108 characters.
@@ -131,6 +137,7 @@ type UnixSocket struct {
 
 // BackendSpec describes the desired state of BackendSpec.
 // +kubebuilder:validation:XValidation:rule="self.type != 'DynamicResolver' || !has(self.endpoints)",message="DynamicResolver type cannot have endpoints specified"
+// +k8s:openapi-gen=true
 type BackendSpec struct {
 	// Type defines the type of the backend. Defaults to "Endpoints"
 	//
@@ -170,6 +177,7 @@ type BackendSpec struct {
 }
 
 // BackendTLSSettings holds the TLS settings for the backend.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:message="must not contain both CACertificateRefs and WellKnownCACertificates",rule="!(has(self.caCertificateRefs) && size(self.caCertificateRefs) > 0 && has(self.wellKnownCACertificates) && self.wellKnownCACertificates != \"\")"
 // +kubebuilder:validation:XValidation:message="must not contain either CACertificateRefs or WellKnownCACertificates when InsecureSkipVerify is enabled",rule="!((has(self.insecureSkipVerify) && self.insecureSkipVerify) && ((has(self.caCertificateRefs) && size(self.caCertificateRefs) > 0) || (has(self.wellKnownCACertificates) && self.wellKnownCACertificates != \"\")))"
 type BackendTLSSettings struct {
@@ -207,6 +215,7 @@ type BackendTLSSettings struct {
 }
 
 // BackendType defines the type of the Backend.
+// +k8s:openapi-gen=true
 type BackendType string
 
 const (
@@ -224,9 +233,11 @@ const (
 
 // BackendConditionType is a type of condition for a backend. This type should be
 // used with a Backend resource Status.Conditions field.
+// +k8s:openapi-gen=true
 type BackendConditionType string
 
 // BackendConditionReason is a reason for a backend condition.
+// +k8s:openapi-gen=true
 type BackendConditionReason string
 
 const (
@@ -253,6 +264,7 @@ const (
 )
 
 // BackendStatus defines the state of Backend
+// +k8s:openapi-gen=true
 type BackendStatus struct {
 	// Conditions describe the current conditions of the Backend.
 	//
@@ -265,6 +277,7 @@ type BackendStatus struct {
 
 // BackendList contains a list of Backend resources.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:object:root=true
 type BackendList struct {
 	metav1.TypeMeta `json:",inline"`

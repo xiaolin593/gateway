@@ -8,6 +8,7 @@ package v1alpha1
 import gwapiv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 // DNSLookupFamily defines the behavior of Envoy when resolving DNS for hostnames
+// +k8s:openapi-gen=true
 // +enum
 // +kubebuilder:validation:Enum=IPv4;IPv6;IPv4Preferred;IPv6Preferred;IPv4AndIPv6
 type DNSLookupFamily string
@@ -28,6 +29,7 @@ const (
 	IPv4AndIPv6DNSLookupFamily DNSLookupFamily = "IPv4AndIPv6"
 )
 
+// +k8s:openapi-gen=true
 type DNS struct {
 	// DNSRefreshRate specifies the rate at which DNS records should be refreshed.
 	// Defaults to 30 seconds.

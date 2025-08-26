@@ -6,6 +6,7 @@
 package v1alpha1
 
 // CircuitBreaker defines the Circuit Breaker configuration.
+// +k8s:openapi-gen=true
 type CircuitBreaker struct {
 	// The maximum number of connections that Envoy will establish to the referenced backend defined within a xRoute rule.
 	//
@@ -54,6 +55,7 @@ type CircuitBreaker struct {
 }
 
 // PerEndpointCircuitBreakers defines Circuit Breakers that will apply per-endpoint for an upstream cluster
+// +k8s:openapi-gen=true
 type PerEndpointCircuitBreakers struct {
 	// MaxConnections configures the maximum number of connections that Envoy will establish per-endpoint to the referenced backend defined within a xRoute rule.
 	//

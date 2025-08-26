@@ -19,6 +19,7 @@ const (
 // BackendTrafficPolicy allows the user to configure the behavior of the connection
 // between the Envoy Proxy listener and the backend service.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:categories=envoy-gateway,shortName=btp
 // +kubebuilder:subresource:status
@@ -36,6 +37,7 @@ type BackendTrafficPolicy struct {
 
 // BackendTrafficPolicySpec defines the desired state of BackendTrafficPolicy.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.targetRef) && !has(self.targetRefs)) || (!has(self.targetRef) && has(self.targetRefs)) || (has(self.targetSelectors) && self.targetSelectors.size() > 0) ", message="either targetRef or targetRefs must be used"
 // +kubebuilder:validation:XValidation:rule="has(self.targetRef) ? self.targetRef.group == 'gateway.networking.k8s.io' : true ", message="this policy can only have a targetRef.group of gateway.networking.k8s.io"
 // +kubebuilder:validation:XValidation:rule="has(self.targetRef) ? self.targetRef.kind in ['Gateway', 'HTTPRoute', 'GRPCRoute', 'UDPRoute', 'TCPRoute', 'TLSRoute'] : true", message="this policy can only have a targetRef.kind of Gateway/HTTPRoute/GRPCRoute/TCPRoute/UDPRoute/TLSRoute"
@@ -109,6 +111,8 @@ type BackendTrafficPolicySpec struct {
 	Telemetry *BackendTelemetry `json:"telemetry,omitempty"`
 }
 
+// +k8s:openapi-gen=true
+
 type BackendTelemetry struct {
 	// Tracing configures the tracing settings for the backend or HTTPRoute.
 	//
@@ -118,6 +122,7 @@ type BackendTelemetry struct {
 
 // ProtocolUpgradeConfig specifies the configuration for protocol upgrades.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="!has(self.connect) || self.type == 'CONNECT'",message="The connect configuration is only allowed when the type is CONNECT."
 type ProtocolUpgradeConfig struct {
 	// Type is the case-insensitive type of protocol upgrade.
@@ -132,12 +137,16 @@ type ProtocolUpgradeConfig struct {
 	Connect *ConnectConfig `json:"connect,omitempty"`
 }
 
+// +k8s:openapi-gen=true
+
 type ConnectConfig struct {
 	// Terminate the CONNECT request, and forwards the payload as raw TCP data.
 	//
 	// +optional
 	Terminate *bool `json:"terminate,omitempty"`
 }
+
+// +k8s:openapi-gen=true
 
 type RequestBuffer struct {
 	// Limit specifies the maximum allowed size in bytes for each incoming request buffer.
@@ -152,6 +161,7 @@ type RequestBuffer struct {
 
 // BackendTrafficPolicyList contains a list of BackendTrafficPolicy resources.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:object:root=true
 type BackendTrafficPolicyList struct {
 	metav1.TypeMeta `json:",inline"`

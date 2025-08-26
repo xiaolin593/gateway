@@ -15,6 +15,7 @@ const (
 	KindEnvoyExtensionPolicy = "EnvoyExtensionPolicy"
 )
 
+// +k8s:openapi-gen=true
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:shortName=eep
 // +kubebuilder:subresource:status
@@ -34,6 +35,7 @@ type EnvoyExtensionPolicy struct {
 
 // EnvoyExtensionPolicySpec defines the desired state of EnvoyExtensionPolicy.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.targetRef) && !has(self.targetRefs)) || (!has(self.targetRef) && has(self.targetRefs)) || (has(self.targetSelectors) && self.targetSelectors.size() > 0) ", message="either targetRef or targetRefs must be used"
 // +kubebuilder:validation:XValidation:rule="has(self.targetRef) ? self.targetRef.group == 'gateway.networking.k8s.io' : true", message="this policy can only have a targetRef.group of gateway.networking.k8s.io"
 // +kubebuilder:validation:XValidation:rule="has(self.targetRef) ? self.targetRef.kind in ['Gateway', 'HTTPRoute', 'GRPCRoute', 'UDPRoute', 'TCPRoute', 'TLSRoute'] : true", message="this policy can only have a targetRef.kind of Gateway/HTTPRoute/GRPCRoute/TCPRoute/UDPRoute/TLSRoute"
@@ -65,6 +67,7 @@ type EnvoyExtensionPolicySpec struct {
 	Lua []Lua `json:"lua,omitempty"`
 }
 
+// +k8s:openapi-gen=true
 //+kubebuilder:object:root=true
 
 // EnvoyExtensionPolicyList contains a list of EnvoyExtensionPolicy resources.

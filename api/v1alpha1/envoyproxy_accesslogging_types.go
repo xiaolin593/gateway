@@ -18,6 +18,8 @@ type ProxyAccessLog struct {
 	Settings []ProxyAccessLogSetting `json:"settings,omitempty"`
 }
 
+// +k8s:openapi-gen=true
+
 type ProxyAccessLogSetting struct {
 	// Format defines the format of accesslog.
 	// This will be ignored if sink type is ALS.

@@ -21,12 +21,14 @@ import gwapiv1 "sigs.k8s.io/gateway-api/apis/v1"
 // - http://*.example.com:8080
 // - https://*
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:MinLength=1
 // +kubebuilder:validation:MaxLength=253
 // +kubebuilder:validation:Pattern=`^(\*|https?:\/\/(\*|(\*\.)?(([\w-]+\.?)+)?[\w-]+)(:\d{1,5})?)$`
 type Origin string
 
 // CORS defines the configuration for Cross-Origin Resource Sharing (CORS).
+// +k8s:openapi-gen=true
 type CORS struct {
 	// AllowOrigins defines the origins that are allowed to make requests.
 	// It specifies the allowed origins in the Access-Control-Allow-Origin CORS response header.

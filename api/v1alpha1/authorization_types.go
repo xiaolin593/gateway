@@ -11,6 +11,7 @@ import (
 
 // Authorization defines the authorization configuration.
 //
+// +k8s:openapi-gen=true
 // Note: if neither `Rules` nor `DefaultAction` is specified, the default action is to deny all requests.
 type Authorization struct {
 	// Rules defines a list of authorization rules.
@@ -30,6 +31,7 @@ type Authorization struct {
 }
 
 // AuthorizationRule defines a single authorization rule.
+// +k8s:openapi-gen=true
 type AuthorizationRule struct {
 	// Name is a user-friendly name for the rule.
 	// If not specified, Envoy Gateway will generate a unique name for the rule.
@@ -56,6 +58,7 @@ type AuthorizationRule struct {
 }
 
 // Operation specifies the operation of a request.
+// +k8s:openapi-gen=true
 type Operation struct {
 	// Methods are the HTTP methods of the request.
 	// If multiple methods are specified, all specified methods are allowed or denied, based on the action of the rule.
@@ -72,6 +75,7 @@ type Operation struct {
 // or any other identity that can be extracted from a custom header.
 // If there are multiple principal types, all principals must match for the rule to match.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.clientCIDRs) || has(self.jwt) || has(self.headers))",message="at least one of clientCIDRs, jwt, or headers must be specified"
 type Principal struct {
 	// ClientCIDRs are the IP CIDR ranges of the client.
@@ -105,6 +109,7 @@ type Principal struct {
 }
 
 // AuthorizationHeaderMatch specifies how to match against the value of an HTTP header within a authorization rule.
+// +k8s:openapi-gen=true
 type AuthorizationHeaderMatch struct {
 	// Name of the HTTP header.
 	// The header name is case-insensitive unless PreserveHeaderCase is set to true.
@@ -129,6 +134,7 @@ type AuthorizationHeaderMatch struct {
 // At least one of the claims or scopes must be specified.
 // Claims and scopes are And-ed together if both are specified.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.claims) || has(self.scopes))",message="at least one of claims or scopes must be specified"
 type JWTPrincipal struct {
 	// Provider is the name of the JWT provider that used to verify the JWT token.
@@ -164,6 +170,7 @@ type JWTPrincipal struct {
 }
 
 // JWTClaim specifies a claim in a JWT token.
+// +k8s:openapi-gen=true
 type JWTClaim struct {
 	// Name is the name of the claim.
 	// If it is a nested claim, use a dot (.) separated string as the name to
@@ -206,6 +213,7 @@ const (
 )
 
 // AuthorizationAction defines the action to be taken if a rule matches.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=Allow;Deny
 type AuthorizationAction string
 

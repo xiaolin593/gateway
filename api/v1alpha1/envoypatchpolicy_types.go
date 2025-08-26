@@ -16,6 +16,7 @@ const (
 	KindEnvoyPatchPolicy = "EnvoyPatchPolicy"
 )
 
+// +k8s:openapi-gen=true
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:categories=envoy-gateway,shortName=epp
 // +kubebuilder:subresource:status
@@ -36,6 +37,7 @@ type EnvoyPatchPolicy struct {
 }
 
 // EnvoyPatchPolicySpec defines the desired state of EnvoyPatchPolicy.
+// +k8s:openapi-gen=true
 // +union
 type EnvoyPatchPolicySpec struct {
 	// Type decides the type of patch.
@@ -65,6 +67,7 @@ type EnvoyPatchPolicySpec struct {
 }
 
 // EnvoyPatchType specifies the types of Envoy patching mechanisms.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=JSONPatch
 type EnvoyPatchType string
 
@@ -76,6 +79,7 @@ const (
 
 // EnvoyJSONPatchConfig defines the configuration for patching a Envoy xDS Resource
 // using JSONPatch semantic
+// +k8s:openapi-gen=true
 type EnvoyJSONPatchConfig struct {
 	// Type is the typed URL of the Envoy xDS Resource
 	Type EnvoyResourceType `json:"type"`
@@ -86,6 +90,7 @@ type EnvoyJSONPatchConfig struct {
 }
 
 // EnvoyResourceType specifies the type URL of the Envoy resource.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=type.googleapis.com/envoy.config.listener.v3.Listener;type.googleapis.com/envoy.config.route.v3.RouteConfiguration;type.googleapis.com/envoy.config.cluster.v3.Cluster;type.googleapis.com/envoy.config.endpoint.v3.ClusterLoadAssignment;type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.Secret
 type EnvoyResourceType string
 
@@ -103,11 +108,13 @@ const (
 )
 
 // JSONPatchOperationType specifies the JSON Patch operations that can be performed.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=add;remove;replace;move;copy;test
 type JSONPatchOperationType string
 
 // JSONPatchOperation defines the JSON Patch Operation as defined in
 // https://datatracker.ietf.org/doc/html/rfc6902
+// +k8s:openapi-gen=true
 type JSONPatchOperation struct {
 	// Op is the type of operation to perform
 	Op JSONPatchOperationType `json:"op"`
@@ -166,6 +173,7 @@ const (
 	PolicyReasonDisabled gwapiv1a2.PolicyConditionReason = "Disabled"
 )
 
+// +k8s:openapi-gen=true
 //+kubebuilder:object:root=true
 
 // EnvoyPatchPolicyList contains a list of EnvoyPatchPolicy resources.

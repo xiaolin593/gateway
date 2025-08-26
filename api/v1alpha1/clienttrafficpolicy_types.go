@@ -15,6 +15,7 @@ const (
 	KindClientTrafficPolicy = "ClientTrafficPolicy"
 )
 
+// +k8s:openapi-gen=true
 // +kubebuilder:object:root=true
 // +kubebuilder:resource:categories=envoy-gateway,shortName=ctp
 // +kubebuilder:subresource:status
@@ -33,6 +34,7 @@ type ClientTrafficPolicy struct {
 	Status gwapiv1a2.PolicyStatus `json:"status,omitempty"`
 }
 
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.targetRef) && !has(self.targetRefs)) || (!has(self.targetRef) && has(self.targetRefs)) || (has(self.targetSelectors) && self.targetSelectors.size() > 0) ", message="either targetRef or targetRefs must be used"
 //
 // +kubebuilder:validation:XValidation:rule="has(self.targetRef) ? self.targetRef.group == 'gateway.networking.k8s.io' : true", message="this policy can only have a targetRef.group of gateway.networking.k8s.io"
@@ -110,6 +112,7 @@ type ClientTrafficPolicySpec struct {
 
 // HeaderSettings provides configuration options for headers on the listener.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="!(has(self.preserveXRequestID) && has(self.requestID))",message="preserveXRequestID and requestID cannot both be set."
 type HeaderSettings struct {
 	// EnableEnvoyHeaders configures Envoy Proxy to add the "X-Envoy-" headers to requests
@@ -163,6 +166,7 @@ type HeaderSettings struct {
 
 // WithUnderscoresAction configures the action to take when an HTTP header with underscores
 // is encountered.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=Allow;RejectRequest;DropHeader
 type WithUnderscoresAction string
 
@@ -196,6 +200,7 @@ const (
 )
 
 // XForwardedClientCert configures how Envoy Proxy handle the x-forwarded-client-cert (XFCC) HTTP header.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.certDetailsToAdd) && self.certDetailsToAdd.size() > 0) ? (self.mode == 'AppendForward' || self.mode == 'SanitizeSet') : true",message="certDetailsToAdd can only be set when mode is AppendForward or SanitizeSet"
 type XForwardedClientCert struct {
 	// Mode defines how XFCC header is handled by Envoy Proxy.
@@ -216,6 +221,7 @@ type XForwardedClientCert struct {
 }
 
 // XFCCForwardMode defines how XFCC header is handled by Envoy Proxy.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=Sanitize;ForwardOnly;AppendForward;SanitizeSet;AlwaysForwardOnly
 type XFCCForwardMode string
 
@@ -238,6 +244,7 @@ const (
 )
 
 // XFCCCertData specifies the fields in the client certificate to be forwarded in the XFCC header.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:Enum=Subject;Cert;Chain;DNS;URI
 type XFCCCertData string
 
@@ -256,6 +263,7 @@ const (
 
 // ClientIPDetectionSettings provides configuration for determining the original client IP address for requests.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="!(has(self.xForwardedFor) && has(self.customHeader))",message="customHeader cannot be used in conjunction with xForwardedFor"
 type ClientIPDetectionSettings struct {
 	// XForwardedForSettings provides configuration for using X-Forwarded-For headers for determining the client IP address.
@@ -274,6 +282,7 @@ type ClientIPDetectionSettings struct {
 // XForwardedForSettings provides configuration for using X-Forwarded-For headers for determining the client IP address.
 // Refer to https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#x-forwarded-for
 // for more details.
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:XValidation:rule="(has(self.numTrustedHops) && !has(self.trustedCIDRs)) || (!has(self.numTrustedHops) && has(self.trustedCIDRs))", message="only one of numTrustedHops or trustedCIDRs must be set"
 type XForwardedForSettings struct {
 	// NumTrustedHops controls the number of additional ingress proxy hops from the right side of XFF HTTP
@@ -300,6 +309,7 @@ type XForwardedForSettings struct {
 // a trusted custom HTTP header. This uses the the custom_header original IP detection extension.
 // Refer to https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/http/original_ip_detection/custom_header/v3/custom_header.proto
 // for more details.
+// +k8s:openapi-gen=true
 type CustomHeaderExtensionSettings struct {
 	// Name of the header containing the original downstream remote address, if present.
 	//
@@ -317,9 +327,11 @@ type CustomHeaderExtensionSettings struct {
 }
 
 // HTTP3Settings provides HTTP/3 configuration on the listener.
+// +k8s:openapi-gen=true
 type HTTP3Settings struct{}
 
 // HTTP1Settings provides HTTP/1 configuration on the listener.
+// +k8s:openapi-gen=true
 type HTTP1Settings struct {
 	// EnableTrailers defines if HTTP/1 trailers should be proxied by Envoy.
 	// +optional
@@ -334,6 +346,7 @@ type HTTP1Settings struct {
 }
 
 // HTTP10Settings provides HTTP/1.0 configuration on the listener.
+// +k8s:openapi-gen=true
 type HTTP10Settings struct {
 	// UseDefaultHost defines if the HTTP/1.0 request is missing the Host header,
 	// then the hostname associated with the listener should be injected into the
@@ -345,6 +358,7 @@ type HTTP10Settings struct {
 }
 
 // HealthCheckSettings provides HealthCheck configuration on the HTTP/HTTPS listener.
+// +k8s:openapi-gen=true
 type HealthCheckSettings struct {
 	// Path specifies the HTTP path to match on for health check requests.
 	// +kubebuilder:validation:MinLength=1
@@ -357,6 +371,7 @@ type HealthCheckSettings struct {
 // will be added into the X-Forwarded-For header.
 // If both EnableProxyProtocol and ProxyProtocol are set, ProxyProtocol takes precedence.
 //
+// +k8s:openapi-gen=true
 // +kubebuilder:validation:MinProperties=0
 type ProxyProtocolSettings struct {
 	// Optional allows requests without a Proxy Protocol header to be proxied.
@@ -371,7 +386,8 @@ type ProxyProtocolSettings struct {
 	Optional *bool `json:"optional,omitempty"`
 }
 
-//+kubebuilder:object:root=true
+// +k8s:openapi-gen=true
+// +kubebuilder:object:root=true
 
 // ClientTrafficPolicyList contains a list of ClientTrafficPolicy resources.
 type ClientTrafficPolicyList struct {

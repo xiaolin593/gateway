@@ -8,6 +8,8 @@ package v1alpha1
 import gwapiv1 "sigs.k8s.io/gateway-api/apis/v1"
 
 // EnvoyGatewayMetrics defines control plane push/pull metrics configurations.
+// +k8s:openapi-gen=true
+
 type EnvoyGatewayMetrics struct {
 	// Sinks defines the metric sinks where metrics are sent to.
 	Sinks []EnvoyGatewayMetricSink `json:"sinks,omitempty"`
@@ -17,6 +19,8 @@ type EnvoyGatewayMetrics struct {
 
 // EnvoyGatewayMetricSink defines control plane
 // metric sinks where metrics are sent to.
+// +k8s:openapi-gen=true
+
 type EnvoyGatewayMetricSink struct {
 	// Type defines the metric sink type.
 	// EG control plane currently supports OpenTelemetry.
@@ -28,6 +32,7 @@ type EnvoyGatewayMetricSink struct {
 	OpenTelemetry *EnvoyGatewayOpenTelemetrySink `json:"openTelemetry,omitempty"`
 }
 
+// +k8s:openapi-gen=true
 type EnvoyGatewayOpenTelemetrySink struct {
 	// Host define the sink service hostname.
 	Host string `json:"host"`
@@ -55,6 +60,8 @@ type EnvoyGatewayOpenTelemetrySink struct {
 }
 
 // EnvoyGatewayPrometheusProvider will expose prometheus endpoint in pull mode.
+// +k8s:openapi-gen=true
+
 type EnvoyGatewayPrometheusProvider struct {
 	// Disable defines if disables the prometheus metrics in pull mode.
 	//

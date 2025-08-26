@@ -11,6 +11,7 @@ import (
 )
 
 // ClientConnection allows users to configure connection-level settings of client
+// +k8s:openapi-gen=true
 type ClientConnection struct {
 	// ConnectionLimit defines limits related to connections
 	//
@@ -48,6 +49,7 @@ type ClientConnection struct {
 }
 
 // BackendConnection allows users to configure connection-level settings of backend
+// +k8s:openapi-gen=true
 type BackendConnection struct {
 	// BufferLimit Soft limit on size of the cluster’s connections read and write buffers.
 	// BufferLimit applies to connection streaming (maybe non-streaming) channel between processes, it's in user space.
@@ -72,6 +74,7 @@ type BackendConnection struct {
 	SocketBufferLimit *resource.Quantity `json:"socketBufferLimit,omitempty"`
 }
 
+// +k8s:openapi-gen=true
 type ConnectionLimit struct {
 	// Value of the maximum concurrent connections limit.
 	// When the limit is reached, incoming connections will be closed after the CloseDelay duration.
